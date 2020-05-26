@@ -11,8 +11,7 @@
 
 @implementation DWArchiveBaseModel
 
-
--(void)encodeWithCoder:(NSCoder *)coder
+- (void)encodeWithCoder:(NSCoder *)coder
 {
     NSArray *names = [[self class] getPropertyNames];
     for (NSString *name in names) {
@@ -21,7 +20,7 @@
     }
 }
 
--(instancetype)initWithCoder:(NSCoder *)coder
+- (instancetype)initWithCoder:(NSCoder *)coder
 {
     if (self = [super init]) {
         NSArray *names = [[self class] getPropertyNames];
@@ -29,12 +28,11 @@
             id value = [coder decodeObjectForKey:name];
             [self setValue:value forKey:name];
         }
-        
     }
-    return self;;
+    return self;
 }
 
--(id)copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone *)zone
 {
     id obj = [[[self class] alloc] init];
     NSArray *names = [[self class] getPropertyNames];
@@ -45,14 +43,14 @@
     return obj;
 }
 
-+(NSArray *)getPropertyNames{
++ (NSArray *)getPropertyNames {
     //Property count
     unsigned int count;
     //Get property list
     objc_property_t *properties = class_copyPropertyList([self class], &count);
     //get names
     NSMutableArray *array = [NSMutableArray array];
-    for (int i = 0; i<count; i++) {
+    for (int i = 0; i < count; i++) {
         //objc_property_t
         objc_property_t property = properties[i];
         const char *cName = property_getName(property);

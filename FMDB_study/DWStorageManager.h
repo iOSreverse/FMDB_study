@@ -18,8 +18,12 @@ NS_ASSUME_NONNULL_BEGIN
 +(instancetype)sharedManager;
 
 #pragma mark - motion Model Actions
-
-
+//存
+-(BOOL)saveStudentModel:(Student *)model;
+//取
+-(NSArray <Student *>*)getAllStudentModels;
+//删
+-(BOOL)removeStudentModels:(NSArray <Student *> *)models;
 
 @end
 

@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Student : NSObject
+@interface Student : DWArchiveBaseModel
 
 /**
  id

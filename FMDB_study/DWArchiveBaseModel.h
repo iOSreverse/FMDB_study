@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DWArchiveBaseModel : NSObject<NSCoding,NSCopying>
+@interface DWArchiveBaseModel : NSObject<NSCoding, NSCopying>
 
 @end
 
