@@ -13,7 +13,7 @@
 static DWStorageManager *_instance = nil;
 
 //Table SQL
-static NSString *const kCreateStudentModelTableSQL = @"CREATE TABLE IF NOT EXISTS StudentModelTable(ObjectData BLOB NOT NULL,CreatehDate TEXT NOT NULL);";
+static NSString *const kCreateStudentModelTableSQL = @"CREATE TABLE IF NOT EXISTS StudentModelTable(ObjectData BLOB NOT NULL,CreateDate TEXT NOT NULL);";
 
 //table Name
 static NSString *const kStudentModelTable = @"StudentModelTable";
