@@ -41,6 +41,7 @@ static NSString *const kCreateDateColumn = @"CreateDate";
 }
 
 #pragma mark - Student Model
+//插入
 - (BOOL)saveStudentModel:(Student *)model {
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
     if (data.length == 0) {
@@ -61,6 +62,53 @@ static NSString *const kCreateDateColumn = @"CreateDate";
         }
     }];
 
+    return ret;
+}
+
+//读取
+- (NSArray<Student *> *)getAllStudentModels
+{
+    __block NSMutableArray *modelArray = [[NSMutableArray alloc] init];
+
+    [_dbQueue inDatabase:^(FMDatabase *_Nonnull db) {
+        FMResultSet *set = [db executeQuery:[NSString stringWithFormat:@"SELECT * FROM %@", kStudentModelTable]];
+
+        while ([set next]) {
+            NSData *objectData = [set dataForColumn:kObjectDataColumn];
+            Student *model = [NSKeyedUnarchiver unarchiveObjectWithData:objectData];
+            if (model) {
+                [modelArray insertObject:model atIndex:0];
+            }
+        }
+    }];
+
+    return modelArray.copy;
+}
+
+//删除
+- (BOOL)removeStudentModels:(NSArray<Student *> *)models
+{
+    BOOL ret = YES;
+
+    for (Student *model in models) {
+        ret = ret && [self _removeMotionModel:model];
+    }
+
+    return ret;
+}
+
+//内部真正实现删除的方法操作
+- (BOOL)_removeMotionModel:(Student *)model {
+    __block BOOL ret = NO;
+    [_dbQueue inDatabase:^(FMDatabase *_Nonnull db) {
+//        CreateDate
+        NSError *error;
+        NSString *sql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@ = ?", kStudentModelTable, kCreateDateColumn];
+        ret = [db executeUpdate:sql values:@[model.startTime] error:&error];
+        if (!ret) {
+            NSLog(@"Delete Student model fail,error = %@", error);
+        }
+    }];
     return ret;
 }
 
